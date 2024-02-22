@@ -30,6 +30,11 @@ main {
 	flex-direction: row;
 	justify-content: space-between;
 	width: 300px;
+	
+}
+.side a{
+	text-decoration: none;
+	color: black;
 }
 
 .task-form {

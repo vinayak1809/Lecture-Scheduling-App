@@ -3,8 +3,11 @@ import "./Login.css"
 import Header from "../../Components/Header/Header";
 import { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
 
 export const Login = () => {
+  const navigate = useNavigate();
 
   const [email,setEmail] = useState();
   const [password,setPassword] = useState();
@@ -17,12 +20,18 @@ export const Login = () => {
       email:email,password:password
     };
 
-    console.log(userInfo,"courseDetails")
     const user = await axios.post("http://localhost:4000/login",userInfo);
     const token = user.data.token;
-
-    localStorage.setItem('token', token);
-    
+    if (token){
+      localStorage.setItem('token', token);
+    }
+    if(user.data.user.role == "admin"){
+      navigate("/admin");
+    }else if(user.data.user.role == "instructor"){
+      navigate("/instructor");
+    }else{
+      navigate("/login");
+    }
     };
 
   return (

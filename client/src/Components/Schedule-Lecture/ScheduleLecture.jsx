@@ -24,8 +24,9 @@ const ScheduleLecture = () => {
             timeOfDay:day,
             date:date
         };
-    
-        await axios.post("http://localhost:4000/schedule-instructor",courseDetails);
+        
+        const sche = await axios.post("http://localhost:4000/schedule-instructor",courseDetails);
+        alert(sche.data.msg)
     };
     
     useEffect(() => {
@@ -41,7 +42,6 @@ const ScheduleLecture = () => {
             if (response.data.user.length >0){
                 setInstructorID(response.data.user[0]._id)
             }
-            console.log(response.data.user)
         } catch (error) {
             console.error("Error fetching instructors:", error);
         }
@@ -51,10 +51,9 @@ const ScheduleLecture = () => {
         try {
             const response = await axios.get("http://localhost:4000/get-course");
             setCourse(response.data.course)
-            if (response.data.course.lenght >0){
+            if (response.data.course.length >0){
                 setCourseID(response.data.course[0]._id)
             }
-            console.log(response.data.course)
         } catch (error) {
             console.error("Error fetching Courses:", error);
         }

@@ -3,12 +3,16 @@ const User = require("../models/User");
 const jwt = require("jsonwebtoken");
 
 const login = async (req, res) => {
-  const { email, password } = req.body;
+  try {
+    const { email, password } = req.body;
 
-  const user = await User.findOne({ email: email, password: password });
-  const token = user.getJWTToken();
+    const user = await User.findOne({ email: email, password: password });
+    const token = user.getJWTToken();
 
-  res.status(200).json({ user: user, token: token });
+    res.status(200).json({ user: user, token: token });
+  } catch {
+    res.status(200).json({ error: "wrong credentials", user: { role: "" } });
+  }
 };
 
 const checkLoginDetails = async (req, res) => {
@@ -26,10 +30,14 @@ const checkLoginDetails = async (req, res) => {
 
 //Tested with Postman
 const register = async (req, res) => {
-  const user = await new User({ ...req.body });
-  user.save();
+  try {
+    const user = await new User({ ...req.body });
+    user.save();
 
-  res.status(201).json({ msg: "user created successfully" });
+    res.status(201).json({ msg: "user created successfully" });
+  } catch {
+    res.json({ msg: "something went wrong" });
+  }
 };
 
 module.exports = { login, register, checkLoginDetails };

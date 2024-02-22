@@ -15,7 +15,6 @@ const Instructor = () => {
         Authorization: `Bearer ${token}`,
       }});
       setInsScheules(response.data.course)
-      console.log(response.data,"respnose")
 
     } catch (error) {
       console.error("Error fetching schedule:", error);
@@ -33,7 +32,7 @@ const Instructor = () => {
       
        <nav>
           <li>Ideamagix</li>
-          <Link key={0} to={"/logout"} >
+          <Link key={0} to={"/logout"}>
                   <li>Logout</li>
           </Link>
         </nav>

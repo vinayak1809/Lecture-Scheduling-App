@@ -2,6 +2,7 @@ const express = require("express");
 const dotenv = require("dotenv");
 const cors = require("cors");
 const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
 
 const { connection } = require("../server/database");
 
@@ -13,10 +14,10 @@ app.use(cors());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-const mongoose = require("mongoose");
 
 mongoose.connect(
-  `mongodb+srv://vinayak202256:${process.env.password}@ideamagix-cluster.mzgclpo.mongodb.net/?retryWrites=true&w=majority`
+  `mongodb+srv://vinayak202256:${process.env.password}@ideamagix-cluster.mzgclpo.mongodb.net/?retryWrites=true&w=majority`,
+  { useNewUrlParser: true, useUnifiedTopology: true }
 );
 
 app.use(require("./router/AdminRoutes"));

@@ -3,12 +3,16 @@ const Schedule = require("../models/Schedules");
 const User = require("../models/User");
 
 const createCourse = async (req, res) => {
-  const course = await new Course({
-    ...req.body,
-  });
-  course.save();
+  console.log(req.body, "course");
+  try {
+    const course = new Course({ ...req.body });
+    await course.save();
 
-  res.status(201).json({ msg: "Course Created" });
+    res.status(201).json({ msg: "Course Created" });
+  } catch (err) {
+    console.log(err, "errrrr");
+    res.json({ msg: "something went wrong" });
+  }
 };
 
 const getSchedules = async (req, res) => {
@@ -31,7 +35,7 @@ const getCourses = async (req, res) => {
 
 const scheduleInstructor = async (req, res) => {
   const { courseID, instructorID, timeOfDay, date } = req.body;
-  console.log(courseID, instructorID, timeOfDay, date);
+
   const schedule = await Schedule.find({
     courseID: courseID,
     timeOfDay: timeOfDay,
@@ -47,22 +51,7 @@ const scheduleInstructor = async (req, res) => {
 
     schedule.save();
 
-    //const course = await Course.findOneAndUpdate(
-    //  {
-    //    _id: req.body.courseID,
-    //  },
-    //  {
-    //    $push: {
-    //      batches: {
-    //        instructorID: instructorID,
-    //        time: "",
-    //        timeOfDay: timeOfDay,
-    //      },
-    //    },
-    //  }
-    //);
-
-    res.status(201).json({ msg: "schedule created" });
+    res.status(201).json({ msg: "Schedule created" });
   }
 };
 

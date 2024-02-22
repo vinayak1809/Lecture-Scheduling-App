@@ -5,7 +5,6 @@ const getInstructorSchedules = async (req, res) => {
   const token = req.headers.authorization.split(" ")[1];
 
   const decodedData = await jwt.verify(token, process.env.JWT_SECRET);
-  console.log(decodedData, "user");
 
   const course = await Schedule.find({
     instructorID: decodedData.id,
