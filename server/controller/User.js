@@ -11,7 +11,9 @@ const login = async (req, res) => {
 
     res.status(200).json({ user: user, token: token });
   } catch {
-    res.status(200).json({ error: "wrong credentials", user: { role: "" } });
+    res
+      .status(500)
+      .json({ error: "Wrong Email or Password", user: { role: "" } });
   }
 };
 
@@ -24,7 +26,7 @@ const checkLoginDetails = async (req, res) => {
     const user = await User.findOne({ _id: decodedData.id });
     res.json({ user: user });
   } catch (err) {
-    res.json({ msg: "error occured", user: { role: "" } });
+    res.status(500).json({ error: "something went wrong", user: { role: "" } });
   }
 };
 
@@ -36,7 +38,7 @@ const register = async (req, res) => {
 
     res.status(201).json({ msg: "user created successfully" });
   } catch {
-    res.json({ msg: "something went wrong" });
+    res.status(500).json({ error: "something went wrong" });
   }
 };
 

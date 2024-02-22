@@ -3,55 +3,73 @@ const Schedule = require("../models/Schedules");
 const User = require("../models/User");
 
 const createCourse = async (req, res) => {
-  console.log(req.body, "course");
   try {
     const course = new Course({ ...req.body });
     await course.save();
 
-    res.status(201).json({ msg: "Course Created" });
+    res.status(201).json({ msg: "Course created successfully" });
   } catch (err) {
-    console.log(err, "errrrr");
-    res.json({ msg: "something went wrong" });
+    res.status(500).json({ error: "something went wrong" });
   }
 };
 
 const getSchedules = async (req, res) => {
-  const course = await Schedule.find()
-    .populate({ path: "instructorID" })
-    .populate({ path: "courseID" });
+  try {
+    const course = await Schedule.find()
+      .populate({ path: "instructorID" })
+      .populate({ path: "courseID" });
 
-  res.status(200).json({ course: course, msg: "success" });
+    res.status(200).json({ course: course, msg: "success" });
+  } catch {
+    res.status(500).json({ error: "something went wrong" });
+  }
 };
 
 const getInstructors = async (req, res) => {
-  const user = await User.find({ role: "instructor" });
-  res.status(200).json({ user: user, msg: "success" });
+  try {
+    const user = await User.find({ role: "instructor" });
+    res.status(200).json({ user: user, msg: "success" });
+  } catch {
+    res.status(500).json({ error: "something went wrong" });
+  }
 };
 
 const getCourses = async (req, res) => {
-  const course = await Course.find();
-  res.status(200).json({ course: course, msg: "success" });
+  try {
+    const course = await Course.find();
+    res.status(200).json({ course: course, msg: "success" });
+  } catch {
+    res.status(500).json({ error: "something went wrong" });
+  }
 };
 
 const scheduleInstructor = async (req, res) => {
-  const { courseID, instructorID, timeOfDay, date } = req.body;
+  try {
+    const { instructorID, date } = req.body;
 
-  const schedule = await Schedule.find({
-    courseID: courseID,
-    timeOfDay: timeOfDay,
-    instructorID: instructorID,
-  });
-
-  if (schedule.length > 0) {
-    res.status(200).json({ msg: "Instructor not avalaible" });
-  } else {
-    const schedule = new Schedule({
-      ...req.body,
+    const schedule = await Schedule.find({
+      $or: [
+        {
+          instructorID: instructorID,
+          date: date,
+        },
+        { date: date },
+      ],
     });
 
-    schedule.save();
+    if (schedule.length > 0) {
+      res.status(200).json({ msg: "Instructor not available" });
+    } else {
+      const schedule = new Schedule({
+        ...req.body,
+      });
 
-    res.status(201).json({ msg: "Schedule created" });
+      schedule.save();
+
+      res.status(201).json({ msg: "Schedule Created" });
+    }
+  } catch {
+    res.json({ error: "something went wrong" });
   }
 };
 
