@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import Login from "./pages/Login/Login";
 import Instructor from "./pages/Instructor/Instructor";
 import AdminPanel from "./pages/Admin/AdminPanel";
@@ -39,6 +39,8 @@ function App() {
         <Routes>
           {user.role == "admin" ? (
             <>
+              p
+              <Route path="/" element={<Navigate to="/admin" />} />
               <Route path="/admin" element={<AdminPanel />} />
               <Route path="/add-course" element={<AddCourse />} />
               <Route path="/schedule-lecture" element={<ScheduleLecture />} />
@@ -46,11 +48,14 @@ function App() {
             </>
           ) : user.role == "instructor" ? (
             <>
+              <Route path="/" element={<Navigate to="/instructor" />} />
               <Route path="/instructor" element={<Instructor />} />
               <Route path="/logout" element={<Logout />} />
             </>
           ) : (
             <>
+              <Route path="/" element={<Navigate to="/login" />} />
+
               <Route path="/login" element={<Login />} />
             </>
           )}
