@@ -31,5 +31,3 @@ app.get("/api/getKey", (req, res) => {
 app.listen(process.env.PORT, () => {
   console.log("Server is working on Port:", process.env.PORT);
 });
-
-console.log(new Date().toLocaleString("en-IN"));
