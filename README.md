@@ -5,7 +5,7 @@
 ### Client-side (Frontend)
 
 ```bash
-$ cd Client
+$ cd client
 $ npm install
 $ npm start
 ```
@@ -13,7 +13,7 @@ $ npm start
 ### Server-side (Backend)
 
 ```bash
-$ cd Server
+$ cd server
 $ npm install
 $ npm start
 ```
