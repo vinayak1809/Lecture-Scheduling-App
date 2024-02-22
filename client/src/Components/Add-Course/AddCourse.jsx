@@ -3,6 +3,7 @@ import { imageUpload } from '../../utils/imageUpload';
 import axios from 'axios';
 import "./AddCourse.css"
 import Header from '../Header/Header';
+import { url } from '../../utils/url';
 
 const AddCourse = () => {
   const [name,setName] = useState();
@@ -19,6 +20,8 @@ const AddCourse = () => {
 
   const pushData = async (e) => {
     e.preventDefault();
+    
+    try{
     const img = await imageUpload(image);
 
     const courseDetails = {
@@ -28,8 +31,12 @@ const AddCourse = () => {
       image: img.url
     };
 
-    const c = await axios.post("https://lecture-scheduling-app.onrender.com/create-course",courseDetails);
-    alert(c.data.msg)
+    const c = await axios.post(`${url}/create-course`,courseDetails);
+    alert(c.data.msg);
+    }catch(err){
+      console.log(err,"err")
+      alert("Something went wrong");
+    }
     };
 
   return (
@@ -37,15 +44,15 @@ const AddCourse = () => {
         <Header />
 
         <form onSubmit={(e)=>{pushData(e)}}>
-          <ul class="form-style-1">
+          <ul className="form-style-1">
               <li>
-                <label>Full Name <span class="required">*</span></label>
-                <input type="text" name="field1" class="field-divided" placeholder="Name" 
+                <label>Full Name <span className="required">*</span></label>
+                <input type="text" name="field1" className="field-divided" placeholder="Name" 
                 onChange={(e) => setName(e.target.value)}/>
               </li>
               <li>
                   <label>Level</label>
-                  <select  class="field-select"
+                  <select  className="field-select"
                     id="level"
                     onChange={(e) => setLevel(e.target.value)}
                     >
@@ -55,8 +62,8 @@ const AddCourse = () => {
                   </select>
               </li>
               <li>
-                  <label>Desciption <span class="required">*</span></label>
-                  <textarea name="field5" id="field5" class="field-long field-textarea" 
+                  <label>Desciption <span className="required">*</span></label>
+                  <textarea name="field5" id="field5" className="field-long field-textarea" 
                   onChange={(e) => setDescription(e.target.value)}></textarea>
               </li>
 

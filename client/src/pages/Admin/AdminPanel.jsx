@@ -3,6 +3,7 @@ import "./AdminPanel.css"
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Header from "../../Components/Header/Header";
+import { url } from "../../utils/url";
 
 const AdminPanel = () => {
   const [schedules, setSchedules] = useState();
@@ -10,7 +11,7 @@ const AdminPanel = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("https://lecture-scheduling-app.onrender.com/get-schedules");
+        const response = await axios.get(`${url}/get-schedules`);
         setSchedules(response.data.course)
       } catch (error) {
         console.error("Error fetching schedule:", error);
@@ -26,13 +27,13 @@ const AdminPanel = () => {
         <nav>
           <li>Ideamagix</li>
           <div className="side">
-          <Link key={0} to={"/schedule-lecture"} >
+          <Link to={"/schedule-lecture"} >
                   <li>Schedule Lecture</li>
           </Link>
-          <Link key={0} to={"/add-course"} >
+          <Link to={"/add-course"} >
               <li>Add Course</li>
           </Link>
-          <Link key={0} to={"/logout"} >
+          <Link to={"/logout"} >
                   <li>Logout</li>
           </Link>
           </div>
@@ -41,7 +42,7 @@ const AdminPanel = () => {
         
     <main>
        
-        <div class="task-list" id="task-list">
+        <div className="task-list" id="task-list">
 
         <table>
           <tr>

@@ -11,6 +11,7 @@ const Logout = () => {
   useEffect(() => {
     cleanStorage();
     navigate("/login");
+    window.location.reload();
   }, []);
 
   return null;

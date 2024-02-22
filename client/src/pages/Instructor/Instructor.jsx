@@ -39,7 +39,7 @@ const Instructor = () => {
         
     <main>
        
-        <div class="task-list" id="task-list">
+        <div className="task-list" id="task-list">
 
         <table>
           <tr>

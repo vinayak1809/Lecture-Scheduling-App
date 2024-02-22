@@ -7,6 +7,7 @@ import ScheduleLecture from "./Components/Schedule-Lecture/ScheduleLecture";
 import { useEffect, useState } from "react";
 import Logout from "./Components/Logout/Logout";
 import axios from "axios";
+import { url } from "./utils/url";
 
 const token = localStorage.getItem("token");
 
@@ -15,17 +16,14 @@ function App() {
 
   async function fetchData() {
     try {
-      const response = await axios.get(
-        "https://lecture-scheduling-app.onrender.com/login-details",
-        {
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-        }
-      );
+      const response = await axios.get(`${url}/login-details`, {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      });
       setUser({ role: response.data.user.role });
     } catch (error) {
-      console.error("Error fetching instructors:", error);
+      console.error("something went wrong");
     }
   }
 

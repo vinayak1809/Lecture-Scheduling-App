@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 
 import Header from '../Header/Header';
+import { url } from '../../utils/url'; 
 
 const ScheduleLecture = () => {
 
@@ -17,16 +18,21 @@ const ScheduleLecture = () => {
 
     const pushData = async (e) => {
         e.preventDefault();
-    
-        const courseDetails = {
-            courseID:courseID,
-            instructorID:instructorID,
-            timeOfDay:day,
-            date:date
-        };
         
-        const sche = await axios.post("https://lecture-scheduling-app.onrender.com/schedule-instructor",courseDetails);
-        alert(sche.data.msg)
+        try{
+            const courseDetails = {
+                courseID:courseID,
+                instructorID:instructorID,
+                timeOfDay:day,
+                date:date
+            };
+            
+            const sche = await axios.post(`${url}/schedule-instructor`,courseDetails);
+            alert(sche.data.msg)
+            
+        }catch(err){
+            alert(err.response.data.error)
+          }
     };
     
     useEffect(() => {
@@ -37,7 +43,7 @@ const ScheduleLecture = () => {
 
     const fetchData = async () => {
         try {
-            const response = await axios.get("https://lecture-scheduling-app.onrender.com/get-instructors");
+            const response = await axios.get(`${url}/get-instructors`);
             setinstructors(response.data.user)
             if (response.data.user.length >0){
                 setInstructorID(response.data.user[0]._id)
@@ -49,7 +55,7 @@ const ScheduleLecture = () => {
 
     const fetchData2 = async () => {
         try {
-            const response = await axios.get("https://lecture-scheduling-app.onrender.com/get-course");
+            const response = await axios.get(`${url}/get-course`);
             setCourse(response.data.course)
             if (response.data.course.length >0){
                 setCourseID(response.data.course[0]._id)
@@ -69,10 +75,10 @@ const ScheduleLecture = () => {
     <div>
         <Header />
         <form onSubmit={(e)=>{pushData(e)}}>
-          <ul class="form-style-1">
+          <ul className="form-style-1">
               <li>
                   <label>Subject</label>
-                  <select class="field-select"
+                  <select className="field-select"
                     id="level"
                     onChange={(e) => setCourseID(e.target.value)}
                     >
@@ -83,7 +89,7 @@ const ScheduleLecture = () => {
               </li>
               <li>
                   <label>Instructor</label>
-                  <select  class="field-select"
+                  <select  className="field-select"
                     id="level"
                     onChange={(e) => setInstructorID(e.target.value)}
                     >
@@ -95,7 +101,7 @@ const ScheduleLecture = () => {
               
               <li>
                   <label>Batch</label>
-                  <select  class="field-select"
+                  <select  className="field-select"
                     id="level"
                     onChange={(e) => setDay(e.target.value)}
                     >
