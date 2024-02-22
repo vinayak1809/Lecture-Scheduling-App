@@ -25,7 +25,7 @@ const ScheduleLecture = () => {
             date:date
         };
         
-        const sche = await axios.post("http://localhost:4000/schedule-instructor",courseDetails);
+        const sche = await axios.post("https://lecture-scheduling-app.onrender.com/schedule-instructor",courseDetails);
         alert(sche.data.msg)
     };
     
@@ -37,7 +37,7 @@ const ScheduleLecture = () => {
 
     const fetchData = async () => {
         try {
-            const response = await axios.get("http://localhost:4000/get-instructors");
+            const response = await axios.get("https://lecture-scheduling-app.onrender.com/get-instructors");
             setinstructors(response.data.user)
             if (response.data.user.length >0){
                 setInstructorID(response.data.user[0]._id)
@@ -49,7 +49,7 @@ const ScheduleLecture = () => {
 
     const fetchData2 = async () => {
         try {
-            const response = await axios.get("http://localhost:4000/get-course");
+            const response = await axios.get("https://lecture-scheduling-app.onrender.com/get-course");
             setCourse(response.data.course)
             if (response.data.course.length >0){
                 setCourseID(response.data.course[0]._id)

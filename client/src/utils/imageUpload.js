@@ -2,7 +2,7 @@ import axios from "axios";
 
 const {
   data: { CLOUD_KEY },
-} = await axios.get("http://localhost:4000/api/getKey");
+} = await axios.get("https://lecture-scheduling-app.onrender.com/api/getKey");
 
 export const imageUpload = async (image) => {
   const formData = new FormData();

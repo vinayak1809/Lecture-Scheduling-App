@@ -15,11 +15,14 @@ function App() {
 
   async function fetchData() {
     try {
-      const response = await axios.get("http://localhost:4000/login-details", {
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      });
+      const response = await axios.get(
+        "https://lecture-scheduling-app.onrender.com/login-details",
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        }
+      );
       setUser({ role: response.data.user.role });
     } catch (error) {
       console.error("Error fetching instructors:", error);

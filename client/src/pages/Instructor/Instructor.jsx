@@ -11,7 +11,7 @@ const Instructor = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get("http://localhost:4000/get-instructor-schedules", {headers: {
+      const response = await axios.get("https://lecture-scheduling-app.onrender.com/get-instructor-schedules", {headers: {
         Authorization: `Bearer ${token}`,
       }});
       setInsScheules(response.data.course)

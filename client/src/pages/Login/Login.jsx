@@ -20,7 +20,7 @@ export const Login = () => {
       email:email,password:password
     };
 
-    const user = await axios.post("http://localhost:4000/login",userInfo);
+    const user = await axios.post("https://lecture-scheduling-app.onrender.com/login",userInfo);
     const token = user.data.token;
     if (token){
       localStorage.setItem('token', token);

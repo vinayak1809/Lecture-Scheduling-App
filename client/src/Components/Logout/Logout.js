@@ -5,7 +5,6 @@ const Logout = () => {
   const navigate = useNavigate();
 
   const cleanStorage = () => {
-    console.log("ehehhe");
     localStorage.removeItem("token");
   };
 
@@ -14,7 +13,7 @@ const Logout = () => {
     navigate("/login");
   }, []);
 
-  return null; // Since Logout is not rendering anything, return null
+  return null;
 };
 
 export default Logout;

@@ -10,7 +10,7 @@ const AdminPanel = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:4000/get-schedules");
+        const response = await axios.get("https://lecture-scheduling-app.onrender.com/get-schedules");
         setSchedules(response.data.course)
       } catch (error) {
         console.error("Error fetching schedule:", error);

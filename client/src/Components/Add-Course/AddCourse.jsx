@@ -19,16 +19,16 @@ const AddCourse = () => {
 
   const pushData = async (e) => {
     e.preventDefault();
-  // const img = await imageUpload(image);
+    const img = await imageUpload(image);
 
     const courseDetails = {
       name: name,
       description:description,
       level:level,
-     // image: img.url
+      image: img.url
     };
 
-    const c = await axios.post("http://localhost:4000/create-course",courseDetails);
+    const c = await axios.post("https://lecture-scheduling-app.onrender.com/create-course",courseDetails);
     alert(c.data.msg)
     };
 
