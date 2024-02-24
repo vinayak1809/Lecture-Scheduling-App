@@ -1,8 +1,10 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import UserContext from "../../context/UserContext";
 
 const Logout = () => {
   const navigate = useNavigate();
+  const { setUser } = useContext(UserContext);
 
   const cleanStorage = () => {
     localStorage.removeItem("token");
@@ -10,8 +12,9 @@ const Logout = () => {
 
   useEffect(() => {
     cleanStorage();
+    setUser({ user: { role: "" } });
+
     navigate("/login");
-    window.location.reload();
   }, []);
 
   return null;

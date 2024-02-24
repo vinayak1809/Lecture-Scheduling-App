@@ -1,10 +1,11 @@
 import "./Login.css"
 
 import Header from "../../Components/Header/Header";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { url } from "../../utils/url";
+import UserContext from "../../context/UserContext";
 
 export const Login = () => {
   const navigate = useNavigate();
@@ -12,6 +13,7 @@ export const Login = () => {
   const [email,setEmail] = useState();
   const [password,setPassword] = useState();
 
+  const {setUser} = useContext(UserContext);
 
   const pushData = async (e) => {
     e.preventDefault();
@@ -26,15 +28,18 @@ export const Login = () => {
       if (token){
         localStorage.setItem('token', token);
       }
-      if(user.data.user.role == "admin"){
+      if(user.data.user.role === "admin"){
+        console.log(user)
+        setUser({role:user.data.user.role})
         navigate("/admin");
-        window.location.reload();
-      }else if(user.data.user.role == "instructor"){
+        
+      }else if(user.data.user.role === "instructor"){
+        setUser({role:user.data.user.role})
         navigate("/instructor");
-        window.location.reload();
+        
       }else{
+        setUser({role:user.data.user.role})
         navigate("/login");
-        window.location.reload();
       }
     }catch(err){
       alert(err.response.data.error)
